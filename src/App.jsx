@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react'
 import Die from "./Components/Die"
 import {nanoid} from "nanoid"
+import Confetti from "react-confetti"
+
+
+
 export default function App(){
 
   const[diceNum, setDiceNum] = useState(allNewDice())
   const [tenzies, setTenzies] = useState(false)
 
- 
+
+  
 
   
 
@@ -16,16 +21,19 @@ export default function App(){
     //allDiceSame uses every method also and checks for every dice's value property
     //in the end, set the state of the dices to true an if condition(using conditional rendering caused errors)
     //
-    const allHeld = diceNum.every(die => die.isHeld)
-    const allDiceSame = diceNum.every(die => die.value === diceNum[0].value)
     
-    if(allHeld && allDiceSame){
-      setTenzies(true)
-      console.log("YOU WON!")
-    }
-  }, [diceNum])
-  
+    const checkAllTheSame = diceNum.every(die => die.value === diceNum[0].value)
+    const checkAllHeld = diceNum.every(die => die.isHeld)
 
+    if(checkAllHeld && checkAllTheSame){
+      setTenzies(true)
+      console.log("You won bro!")
+    }
+
+
+  },  [diceNum] )
+  
+ 
 
   function generateNewdice() {
     return{
@@ -73,7 +81,9 @@ const diceElements = diceNum.map(diceNumber => {
       <div className="dice-container">
         {diceElements}
       </div>
-      <button className="roll-dice" onClick={rollDice}>Roll</button>
+      <button className="roll-dice" onClick={rollDice}>
+       {tenzies ? "New Game" : "Roll"}
+    </button>
     </main>
   )
 }
