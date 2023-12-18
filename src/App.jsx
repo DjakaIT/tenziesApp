@@ -27,6 +27,7 @@ export default function App(){
 
     if(checkAllHeld && checkAllTheSame){
       setTenzies(true)
+      alert("You won!")
       console.log("You won bro!")
     }
 
@@ -55,9 +56,14 @@ export default function App(){
 
 
 function rollDice() {
-  setDiceNum(prevDice => prevDice.map(dice => {
-    return dice.isHeld ? dice : generateNewdice()
-  }))
+  if(!tenzies){
+    setDiceNum(prevDice => prevDice.map(dice => {
+      return dice.isHeld ? dice : generateNewdice()
+    })) 
+  }else {
+    setTenzies(false)
+    setDiceNum(allNewDice())
+  }
 }
 
 function holdDice(id) {
